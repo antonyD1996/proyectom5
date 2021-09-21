@@ -6,12 +6,13 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "node index.js",
+    "iniciar": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
   "engines": {
-    "node": "14.x"
+    "node": "14.15.4"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
