@@ -1,8 +1,10 @@
 import usuario from "../models/usuario.js";
 import llave from "../middleware/llaveSecreta.js";
 import Jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
 const controlador = {};
+const rondasDeSal = 10;
 
 controlador.listado = async (req, res) => {
   await usuario
@@ -30,6 +32,7 @@ controlador.uno = async (req, res) => {
 
 controlador.registrar = async (req, res) => {
   const nuevoUsuario = new usuario(req.body);
+  nuevoUsuario.password = await bcrypt.hash(nuevoUsuario.password, rondasDeSal);
   await nuevoUsuario
     .save()
     .then((usuario) => {
@@ -46,6 +49,7 @@ controlador.actualizar = async (req, res) => {
   if (req.body._id) {
     delete req.body._id;
   }
+  req.body.password = await bcrypt.hash(req.body.password, rondasDeSal);
   await usuario
     .findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -81,20 +85,25 @@ controlador.eliminar = async (req, res) => {
 controlador.autenticar = async (req, res) => {
   const user = await usuario.findOne({
     username: req.body.username,
-    password: req.body.password,
   });
 
   if (user) {
-    var datosToken = user._id;
-    const token = Jwt.sign({ id: datosToken }, llave.llave, {
-      expiresIn: "24h",
-    });
-    res.status(200).send({
-      mensaje: "Usuario autenticado",
-      token: token,
+    bcrypt.compare(req.body.password, user.password, (err, coinciden) => {
+      if (err) {
+        res.status(404).send({ mensaje: "La autenticacion fallo" });
+      } else {
+        var datosToken = user._id;
+        const token = Jwt.sign({ id: datosToken }, llave.llave, {
+          expiresIn: "24h",
+        });
+        res.status(200).send({
+          mensaje: "Usuario autenticado",
+          token: token,
+        });
+      }
     });
   } else {
-    res.status(404).send({ mensaje: "La autenticacion fallo" });
+    res.status(404).send({ mensaje: "La autenticacion falaalo" });
   }
 };
 
