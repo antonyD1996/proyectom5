@@ -2,19 +2,22 @@
 @urlComercios = http://localhost:3000/comercios/
 @urlUsuarios = http://localhost:3000/usuarios/
 @urlAutenticacion = http://localhost:3000/autenticacion/
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNGE0ZjhhYjc5Y2U3NDYwYzZjZmUwZSIsImlhdCI6MTYzMjI2MDM5MSwiZXhwIjoxNjMyMzQ2NzkxfQ.27nBbj80aP_v7mvHLPz2U1bnwXD8qMVIOFlYg6NvtHI
 
 POST {{urlAutenticacion}}
 Content-Type: application/json
 
 {
-    "usuario":"carolina",
-    "clave":"1234"
+    "username":"antonyD96",
+    "password":"1234"
 }
 ###
 //Comercios
 GET {{urlComercios}}
+token: {{token}}
 ### 
 POST {{urlComercios}} 
+token: {{token}}
 Content-Type: application/json
 
 {

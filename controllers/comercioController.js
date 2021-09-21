@@ -11,20 +11,6 @@ controlador.listado = async (req, res) => {
     );
 };
 
-controlador.registrar = async (req, res) => {
-  const nuevoComercio = new comercio(req.body);
-  await nuevoComercio
-    .save()
-    .then((comercio) => {
-      if (comercio) {
-        res.status(201).send(comercio);
-      }
-    })
-    .catch((error) =>
-      res.status(500).send({ mensaje: "Ocurrio un error", error: error })
-    );
-};
-
 controlador.uno = async (req, res) => {
   await comercio
     .findById(req.params.id)
@@ -33,6 +19,20 @@ controlador.uno = async (req, res) => {
         res.status(200).send(comercio);
       } else {
         res.status(404).send({ mensaje: "El comercio no fue encontrado" });
+      }
+    })
+    .catch((error) =>
+      res.status(500).send({ mensaje: "Ocurrio un error", error: error })
+    );
+};
+
+controlador.registrar = async (req, res) => {
+  const nuevoComercio = new comercio(req.body);
+  await nuevoComercio
+    .save()
+    .then((comercio) => {
+      if (comercio) {
+        res.status(201).send(comercio);
       }
     })
     .catch((error) =>

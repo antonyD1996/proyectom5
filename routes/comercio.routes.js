@@ -21,7 +21,7 @@ const router = Router();
  *              type: string
  *              format: JWT
  *          required: true
- *          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDk1NjU4NmNkNjFiN2IwNGFmYmVlMCIsImlhdCI6MTYzMjI0NzIyOSwiZXhwIjoxNjMyMzMzNjI5fQ.17caPgAzooObo-TawOiO5xFmAfcOmpgTfUadkS-G9S0
+ *          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNGE0ZjhhYjc5Y2U3NDYwYzZjZmUwZSIsImlhdCI6MTYzMjI2MDM5MSwiZXhwIjoxNjMyMzQ2NzkxfQ.27nBbj80aP_v7mvHLPz2U1bnwXD8qMVIOFlYg6NvtHI
  *      idComercio:
  *          in: path
  *          name: id
