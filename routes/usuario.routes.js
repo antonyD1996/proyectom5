@@ -77,6 +77,7 @@ const router = Router();
  *              description: Ocurrio un error
  */
 router.get("/", usuarioController.listado);
+router.get("/permisos", usuarioController.permisos);
 
 /**
  * @swagger

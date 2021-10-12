@@ -26,6 +26,20 @@ controlador.uno = async (req, res) => {
     );
 };
 
+controlador.puntuacion = async (req, res) => {
+  const calificacion = {
+    menor: generarPuntuacion(),
+    mayor: generarPuntuacion(),
+    promedio: generarPuntuacion(),
+  };
+
+  try {
+    res.status(200).send(calificacion);
+  } catch (error) {
+    res.status(500).send({ mensaje: "Ocurrio un error", error: error });
+  }
+};
+
 controlador.registrar = async (req, res) => {
   const nuevoComercio = new comercio(req.body);
   await nuevoComercio
@@ -75,5 +89,9 @@ controlador.eliminar = async (req, res) => {
       res.status(500).send({ mensaje: "Ocurrio un error", error: error })
     );
 };
+
+function generarPuntuacion() {
+  return Math.floor(Math.random() * 5) + 1;
+}
 
 export default controlador;

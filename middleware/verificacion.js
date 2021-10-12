@@ -5,7 +5,7 @@ import llave from "./llaveSecreta.js";
 const verificacion = Express.Router();
 
 verificacion.use((req, res, next) => {
-  let token = req.headers.token || req.headers["authorization"];
+  let token = req.headers["x-access-token"] || req.headers["authorization"];
 
   if (!token) {
     res.status(401).send({ mensaje: "No autorizado" });

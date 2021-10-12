@@ -1,4 +1,5 @@
 import usuario from "../models/usuario.js";
+import permiso from "../models/permiso.js";
 import llave from "../middleware/llaveSecreta.js";
 import Jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
@@ -8,6 +9,15 @@ const rondasDeSal = 10;
 
 controlador.listado = async (req, res) => {
   await usuario
+    .find()
+    .then((listado) => res.status(200).json(listado))
+    .catch((error) =>
+      res.status(500).send({ mensaje: "Ocurrio un error", error: error })
+    );
+};
+controlador.permisos = async (req, res) => {
+  console.log("test");
+  await permiso
     .find()
     .then((listado) => res.status(200).json(listado))
     .catch((error) =>
@@ -103,7 +113,7 @@ controlador.autenticar = async (req, res) => {
       }
     });
   } else {
-    res.status(404).send({ mensaje: "La autenticacion falaalo" });
+    res.status(404).send({ mensaje: "La autenticacion fallo" });
   }
 };
 

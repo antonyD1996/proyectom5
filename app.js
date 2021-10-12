@@ -2,6 +2,7 @@ import Express from "express";
 import Morgan from "morgan";
 import RutasComercio from "./routes/comercio.routes.js";
 import RutasUsuario from "./routes/usuario.routes.js";
+import RutasPuntuacion from "./routes/puntuacion.routes.js";
 import Autenticacion from "./routes/autenticacion.js";
 import Verificacion from "./middleware/verificacion.js";
 import cors from "cors";
@@ -36,6 +37,7 @@ app.use(Morgan("dev"));
 
 app.use("/comercios", Verificacion, RutasComercio);
 app.use("/usuarios", Verificacion, RutasUsuario);
+app.use("/puntuacion", RutasPuntuacion);
 app.use(Autenticacion);
 app.set("puerto", process.env.PORT || 3000);
 
