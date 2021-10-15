@@ -5,6 +5,7 @@ import RutasUsuario from "./routes/usuario.routes.js";
 import RutasPuntuacion from "./routes/puntuacion.routes.js";
 import Autenticacion from "./routes/autenticacion.js";
 import Verificacion from "./middleware/verificacion.js";
+import autenticador from "./middleware/Auth.js";
 import cors from "cors";
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
@@ -36,7 +37,7 @@ app.use(Express.urlencoded({ extended: true }));
 app.use(Morgan("dev"));
 
 app.use("/comercios", Verificacion, RutasComercio);
-app.use("/usuarios", Verificacion, RutasUsuario);
+app.use("/usuarios", Verificacion, autenticador.isAdmin, RutasUsuario);
 app.use("/puntuacion", RutasPuntuacion);
 app.use(Autenticacion);
 app.set("puerto", process.env.PORT || 3000);

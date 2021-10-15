@@ -1,5 +1,6 @@
 import usuario from "../models/usuario.js";
 import permiso from "../models/permiso.js";
+import rol from "../models/rol.js";
 import llave from "../middleware/llaveSecreta.js";
 import Jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
@@ -16,8 +17,15 @@ controlador.listado = async (req, res) => {
     );
 };
 controlador.permisos = async (req, res) => {
-  console.log("test");
   await permiso
+    .find()
+    .then((listado) => res.status(200).json(listado))
+    .catch((error) =>
+      res.status(500).send({ mensaje: "Ocurrio un error", error: error })
+    );
+};
+controlador.roles = async (req, res) => {
+  await rol
     .find()
     .then((listado) => res.status(200).json(listado))
     .catch((error) =>
@@ -93,15 +101,16 @@ controlador.eliminar = async (req, res) => {
 };
 
 controlador.autenticar = async (req, res) => {
-  const user = await usuario.findOne({
-    username: req.body.username,
-  });
+  const user = await usuario
+    .findOne({
+      username: req.body.username,
+    })
+    .populate("rol")
+    .exec();
 
   if (user) {
     bcrypt.compare(req.body.password, user.password, (err, coinciden) => {
-      if (err) {
-        res.status(404).send({ mensaje: "La autenticacion fallo" });
-      } else {
+      if (coinciden) {
         var datosToken = user._id;
         const token = Jwt.sign({ id: datosToken }, llave.llave, {
           expiresIn: "24h",
@@ -109,7 +118,10 @@ controlador.autenticar = async (req, res) => {
         res.status(200).send({
           mensaje: "Usuario autenticado",
           token: token,
+          user: user,
         });
+      } else {
+        res.status(404).send({ mensaje: "La autenticacion fallo" });
       }
     });
   } else {

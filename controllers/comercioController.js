@@ -26,11 +26,26 @@ controlador.uno = async (req, res) => {
     );
 };
 
+function generarPuntuacion() {
+  return Math.floor(Math.random() * 5) + 1;
+}
+
 controlador.puntuacion = async (req, res) => {
+  let menor = generarPuntuacion();
+  let mayor = generarPuntuacion();
+
+  console.log(menor);
+  console.log(mayor);
+
+  if (menor > mayor) {
+    let menorOld = menor;
+    menor = mayor;
+    mayor = menorOld;
+  }
   const calificacion = {
-    menor: generarPuntuacion(),
-    mayor: generarPuntuacion(),
-    promedio: generarPuntuacion(),
+    menor: menor,
+    mayor: mayor,
+    promedio: (menor + mayor) / 2,
   };
 
   try {
@@ -89,9 +104,5 @@ controlador.eliminar = async (req, res) => {
       res.status(500).send({ mensaje: "Ocurrio un error", error: error })
     );
 };
-
-function generarPuntuacion() {
-  return Math.floor(Math.random() * 5) + 1;
-}
 
 export default controlador;
