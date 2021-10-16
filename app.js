@@ -40,7 +40,7 @@ app.use("/comercios", Verificacion, RutasComercio);
 app.use("/usuarios", Verificacion, autenticador.isAdmin, RutasUsuario);
 app.use("/puntuacion", RutasPuntuacion);
 app.use(Autenticacion);
-app.set("puerto", process.env.PORT || 3000);
+app.set("puerto", process.env.PORT || 3001);
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
