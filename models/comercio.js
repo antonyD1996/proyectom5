@@ -2,8 +2,8 @@ import Mongoose from "mongoose";
 
 const comercioSchema = Mongoose.Schema(
   {
-    latitud: { type: String, required: true },
-    longitud: { type: String, required: true },
+    latitud: { type: Number, required: true },
+    longitud: { type: Number, required: true },
     nombre: { type: String, required: true },
     nombrePropietario: { type: String, required: true },
     telefono: { type: String, required: true },

@@ -9,6 +9,7 @@ import autenticador from "./middleware/Auth.js";
 import cors from "cors";
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
+import comercioController from "./controllers/comercioController.js";
 
 const options = {
   definition: {
@@ -36,6 +37,7 @@ app.use(Express.json());
 app.use(Express.urlencoded({ extended: true }));
 app.use(Morgan("dev"));
 
+app.get("/listadoComercios", comercioController.listado);
 app.use("/comercios", Verificacion, RutasComercio);
 app.use("/usuarios", Verificacion, autenticador.isAdmin, RutasUsuario);
 app.use("/puntuacion", RutasPuntuacion);
